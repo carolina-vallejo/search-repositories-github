@@ -2,15 +2,16 @@
 
   var urlRepos = "https://api.github.com/search/repositories?";
   var query = "d3"
-  var page = 1;
-  var per_page = 10;
+  var pageRepo = 1;
+  var pageSubscribers = 1;
+  var per_page = 12;
   var actualView = 'repositories';
   var actualUrlSubscriber = '';
   var actualRepoName = '';
   var actualNumRepos = '';
 
   //----SELECTORS
-  var $loader, $messages, $htmlBody, $moreBtn, $title, $reposContainer, $subscribersContainer;
+  var $loader, $messages, $htmlBody, $moreReposBtn, $moreSubscribersBtn, $title, $reposContainer, $subscribersContainer;
 
   //----VARIABLES
   var itemRepoClass = 'item-repo';
@@ -27,8 +28,10 @@
     $messages = $('#messages');
     $textInput = $("#text-input");
     $searchInput = $("#search-btn");
-    $moreBtn = $('#more-btn');
-    $backBtn = $('#back-btn');
+    $moreReposBtn = $('#more-repos-btn');
+    $moreSubscribersBtn = $('#more-subscribers-btn');
+    $backPrevBtn = $('#back-prev-btn');
+    $backReposBtn = $('#back-repos-btn');
     $title = $('#title');
 
 
@@ -48,34 +51,52 @@
 
     $searchInput.on('click', function() {
 
+      $backReposBtn.trigger('click');
+
       actualView = 'repositories';
 
       $messages.empty();
       $loader.addClass('animate');
-      page = 1;
+      pageRepo = 1;
 
       query = $textInput.val();
       getReposData(urlRepos);
+
+
 
     });
 
     //----MORE REPOS BUTTON 
     //# OJO DECIR QUE SE ESTA VIENDO LA PAGINA UNA DE 20!!!
-    $moreBtn.on('click', function() {
+    $moreReposBtn.on('click', function() {
 
       $messages.empty();
       $loader.addClass('animate');
 
-      page += 1;
+      pageRepo += 1;
 
       console.log(actualView);
 
-      if (actualView === 'repositories') {
-        //$reposContainer.show();
-        getReposData();
-      } else {
-        //$subscribersContainer.hide();
-        getSubscriberData(actualUrlSubscriber, actualRepoName);
+      getReposData();
+      if (pageRepo > 1) {
+        $backPrevBtn.show()
+      }
+
+    });
+
+
+    $backPrevBtn.on('click', function() {
+      $messages.empty();
+      $loader.addClass('animate');
+
+      pageRepo -= 1;
+
+      console.log(actualView);
+
+      getReposData();
+
+      if (pageRepo === 1) {
+        $backPrevBtn.hide();
       }
 
     });
@@ -93,44 +114,79 @@
       actualView = 'subscribers';
       actualUrlSubscriber = $this.attr('data-url');
       actualRepoName = $this.attr('data-reponame');
-      page = 1;
+      pageSubscribers = 1;
 
       //--- TOGGLE CONTAINERS
       $reposContainer.hide();
+      $moreReposBtn.hide();
       $subscribersContainer.show();
-      $backBtn.show();
+      $backReposBtn.show();
+      $backPrevBtn.hide();
 
       $loader.addClass('animate');
 
-      page += 1;
+      getSubscriberData(actualUrlSubscriber, actualRepoName);
+
+
+    });
+
+    //----MORE REPOS BUTTON 
+    //# OJO DECIR QUE SE ESTA VIENDO LA PAGINA UNA DE 20!!!
+    $moreSubscribersBtn.on('click', function() {
+
+      $messages.empty();
+      $loader.addClass('animate');
+
+      pageSubscribers += 1;
+
+      console.log(actualView);
+
       getSubscriberData(actualUrlSubscriber, actualRepoName);
 
     });
 
-    $backBtn.on('click', function() {
+
+
+    $backReposBtn.on('click', function() {
+      actualView = 'repositories';
+
+      $messages.empty();
+
       $reposContainer.show();
       $subscribersContainer.hide();
-      $backBtn.hide();
-      $title.text(actualNumRepos + ' repositories');
+      $backReposBtn.hide();
+      $moreReposBtn.show();
+      $moreSubscribersBtn.hide();
+      $subscribersContainer.hide();
+      $title.text(actualNumRepos + ' repositories of ' + query);
+
+      if (pageRepo > 1) {
+        $backPrevBtn.show();
+      }else{
+        $backPrevBtn.hide();
+      }
     });
 
   });
 
   function getSubscriberData(url, repo) {
 
-    var parameters = '?page=' + page + '&per_page=' + per_page;
+    var parameters = '?page=' + pageSubscribers + '&per_page=' + per_page;
 
     //---LOAD DATA
     d3.json(url + parameters, function(error, data) {
 
       if (error) {
 
+        $messages.text('Sorry something happend, reload the page!');
+
         throw error
 
       } else if (data.length === 0) {
 
-        $moreBtn.hide();
-        //$('.' + itemRepoClass).remove();
+        $moreSubscribersBtn.hide();
+        $('.' + itemSubscribersClass).remove();
+        $title.text('');
         $messages.html('No subscribers');
 
       } else {
@@ -142,9 +198,9 @@
 
         //---SHOW OR HIDE MORE REPOS BTN
         if (data.length < per_page) {
-          $moreBtn.hide();
+          $moreSubscribersBtn.hide();
         } else {
-          $moreBtn.show();
+          $moreSubscribersBtn.show();
         }
 
       }
@@ -159,7 +215,7 @@
 
   function getReposData() {
 
-    var parameters = 'q=' + query + '&page=' + page + '&per_page=' + per_page;
+    var parameters = 'q=' + query + '&page=' + pageRepo + '&per_page=' + per_page;
 
     if (query.length !== 0) {
 
@@ -169,11 +225,13 @@
 
         if (error) {
 
+          $messages.text('Sorry something happend, reload the page!');
+
           throw error
 
         } else if (data.items.length === 0) {
 
-          $moreBtn.hide();
+          $moreReposBtn.hide();
           $('.' + itemRepoClass).remove();
           $messages.html('We couldn’t find any repositories matching <span>' + query + '</span>');
 
@@ -181,15 +239,15 @@
 
           //---PRINT NUMBER OF RESULTS
           actualNumRepos = data.total_count;
-          $title.text(data.total_count + ' repositories');
+          $title.text(data.total_count + ' repositories of ' + query);
 
           repositories(data.items);
 
           //---SHOW OR HIDE MORE REPOS BTN
           if (data.items.length < per_page) {
-            $moreBtn.hide();
+            $moreReposBtn.hide();
           } else {
-            $moreBtn.show();
+            $moreReposBtn.show();
           }
 
         }
@@ -200,9 +258,10 @@
       });
     } else {
 
-      $moreBtn.hide();
+      $moreReposBtn.hide();
       $('.' + itemRepoClass).remove();
       $loader.removeClass('animate');
+      $title.empty();
       $messages.text('Please try with another query!!');
 
     }
@@ -229,6 +288,13 @@
       .select('.img-avatar')
       .attr('src', function(d) {
         return d.avatar_url;
+      });
+
+    //--- NAME
+    item
+      .select('.subscriber-name')
+      .text(function(d) {
+        return d.login;
       });
 
 
@@ -258,13 +324,22 @@
     inner
       .append('div')
       .attr('class', 'subscriber-name')
-      .attr('text', function(d) {
+      .text(function(d) {
         return d.login;
       });
     //--- NAME
     var links = inner
       .append('div')
       .attr('class', 'links');
+
+    links
+      .append('a')
+      .attr('class', 'repositories-link')
+      .attr('href', function(d) {
+        return d.html_url;
+      })
+      .text('Repositories');
+
 
 
 

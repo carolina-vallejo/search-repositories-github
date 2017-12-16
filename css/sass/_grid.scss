@@ -1,5 +1,18 @@
-.row{
-	max-width: 1280px;
-	width: 90%;
-	margin: 0 auto;
+.row {
+  max-width: 1280px;
+  width: 90%;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+[class*="-list"] {
+  @include flex;
+  float: left;
+  width: 100%;
+  &>* {
+  	box-sizing:border-box;
+    width: (100% / 3);
+    padding: 20px;
+    float: left;
+  }
 }
