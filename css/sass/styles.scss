@@ -1,0 +1,192 @@
+@import 'mixins';
+@import 'fonts';
+@import 'settings';
+@import 'loader';
+@import 'grid';
+
+/*--- GENERALS ---*/
+
+body {
+  font-family: $family-serif, Arial, sans-serif;
+  font-size: 100%;
+  @include smoothfonts;
+  background: white;
+  color: $black;
+}
+
+
+/*--- SEARCH BAR ---*/
+
+.search-bar {
+  background: $black;
+  padding: 20px 0;
+  text-align: center;
+  @include clearfix;
+  .inner-margin>* {
+    display: block;
+    float: left;
+    &:nth-child(2) {
+      width: calc(100% - 110px);
+      box-sizing: border-box;
+      padding: 0 0 0 30px;
+      margin-top: 7px;
+    }
+    &:nth-child(3) {
+      margin-top: 7px;
+    }
+  }
+  img {
+    width: 50px;
+    height: auto;
+  }
+  .inner-margin {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/*-- BUTTONS --*/
+
+button,
+input {
+  font-family: $family-serif, Arial, sans-serif;
+}
+
+button {
+  display: block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-shadow: none;
+  box-shadow: none;
+  padding: 10px 20px;
+  border-radius: 0;
+  background: $black;
+  border: 1px solid $black;
+  color: rgba(white, 0.8);
+  cursor: pointer;
+  &:focus {
+    outline: 0;
+    background: darken($black, 4%);
+  }
+}
+
+input[type=text] {
+  display: block;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  background: $black;
+  border: 1px solid rgba(white, 0.3);
+  padding: 10px;
+  color: white;
+  font-size: 20px;
+  margin: 0 auto;
+  transition: all 100ms ease-in-out;
+  @include placeholder {
+    color: rgba(white, 0.2)
+  }
+  &:focus {
+    outline: 0;
+    border-bottom-width: 3px;
+    padding-bottom: 8px;
+  }
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px $black inset;
+    -webkit-text-fill-color: white;
+  }
+}
+
+.search-btn {
+  height: 40px;
+  width: 60px;
+  float: left;
+  box-sizing: border-box;
+  font-size: 0;
+  border: 1px solid white;
+  background: url(../assets/ico-search.svg) no-repeat;
+  background-size: 23px;
+  background-position: center;
+  background-color: white;
+  &:focus {
+    outline: 0;
+    background: url(../assets/ico-search.svg) no-repeat;
+    background-size: 23px;
+    background-position: center;
+    background-color: white;
+    background-color: rgba(white, 0.95);
+  }
+}
+
+.back-btn {
+  height: 40px;
+  width: 40px;
+  float: left;
+  box-sizing: border-box;
+  font-size: 0;
+  border: 0;
+  background: url(../assets/ico-search.svg) no-repeat;
+  background-size: 23px;
+  background-position: center;
+  &:focus {
+    outline: 0;
+    background: transparent;
+  }
+
+}
+
+
+.back-btn,
+.more-btn {
+  display: none;
+}
+
+
+.messages {
+  text-align: center;
+  font-size: 24px;
+  color: lighten($black, 40%);
+  span {
+    color: $black;
+  }
+}
+
+
+/*--- TITLE ---*/
+
+.title {
+  letter-spacing: 0px;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+/*--- CONTAINERS ---*/
+
+.repositories-list,
+.subscribers-list {
+  padding: 30px 0;
+}
+
+/*--- REPOSITORY ITEM ---*/
+.avatar{
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 100%;
+  border: 1px solid #f1f1f1;
+
+  img{
+      -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+    width: 100%;
+  }
+}
+.subscribers-link{
+  cursor: pointer;
+  color: red;
+}
+
+
+
+
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Asana</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+
+  <div class="search-bar">
+    <div class="inner-margin">
+      <img src="assets/logo-github.svg" alt="Logo Github">
+      <div class="input-wrapper">
+        <input id="text-input" type="text" placeholder="Search Repositories"> 
+      </div>
+      
+      <button class="search-btn" id="search-btn">Search</button>  
+
+    </div>
+  </div>
+
+  <div id="loader" class="loader"></div>
+  
+  <div class="row">
+
+    <button id="back-btn" class="back-btn">Back to repositories</button>
+
+    <h1 id="title" class="title"></h1>
+    
+    <div id="repositories-list" class="repositories-list">
+
+    </div>
+
+    <div id="subscribers-list" class="subscribers-list">
+
+
+    </div>
+
+    <div id="messages" class="messages"></div>
+    
+    <button id="more-btn" class="more-btn">
+      More repositories
+    </button>    
+  </div>
+
+
+
+
+
+  <!-- SCRIPTS -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js"></script>
+  <script src="js/functions.js"></script>
+  
+</body>
+</html>

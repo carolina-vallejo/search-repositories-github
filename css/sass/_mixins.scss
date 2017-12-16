@@ -1,0 +1,110 @@
+@mixin gradient($col1, $col2) {
+  background: $col1;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, $col1 0%, $col2 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, $col1 0%, $col2 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, $col1 0%, $col2 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=#{$col1}, endColorstr=#{$col2}, GradientType=0);
+  /* IE6-9 */
+}
+
+//-- FONT SMOOTH
+@mixin smoothfonts {
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -o-font-smoothing: antialiased;
+}
+
+//-- CLEARFIX
+@mixin clearfix {
+  &::after,
+  &::before {
+    content: "";
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+//-- QUERIES
+@mixin mediaquery($max, $width) {
+  @media only screen and (unquote( $max + '-width: ' + $width)) {
+    @content;
+  }
+}
+
+@mixin mediaquery_h($max, $height) {
+  @media only screen and (unquote( $max + '-height: ' + $height)) {
+    @content;
+  }
+}
+
+//-- TRANSFOR
+@mixin transform($transform) {
+  -webkit-transform: $transform;
+  -ms-transform: $transform;
+  -moz-transform: $transform;
+  transform: $transform;
+}
+@mixin transform-origin($val1, $val2){
+	-webkit-transform-origin:$val1 $val2;
+	-moz-transform-origin:$val1 $val2;
+	-ms-transform-origin:$val1 $val2;
+	-o-transform-origin:$val1 $val2;
+	transform-origin:$val1 $val2;
+}
+
+//-- ANIMATION
+
+@mixin animation($time, $easing, $name, $fill, $iteration) {
+  -webkit-animation: $name $time $easing $iteration;
+  -moz-animation: $name $time $easing $iteration;
+  -o-animation: $name $time $easing $iteration;
+  animation: $name $time $easing $iteration;
+
+  @if $fill == 'forwards' {
+	  -webkit-animation-fill-mode: forwards;
+	  -moz-animation-fill-mode: forwards;
+	  -o-animation-fill-mode: forwards;
+	  animation-fill-mode: forwards;  	
+  }
+}
+
+
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-o-keyframes #{$name} {
+    @content;
+  }
+}
+
+//-- PLACEHOLDERS
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    @content;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
