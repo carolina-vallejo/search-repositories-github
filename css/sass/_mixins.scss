@@ -131,3 +131,19 @@
   user-select: none;
   /* Standard syntax */
 }
+
+
+@mixin mask($col,$opac) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: $col;
+    opacity: $opac;
+    transition: all 200ms ease-in-out;
+  }
+}

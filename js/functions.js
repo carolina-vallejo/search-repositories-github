@@ -2,7 +2,7 @@
 
   //----VARIABLES
   var urlRepos = "https://api.github.com/search/repositories?";
-  var query = "amazing"
+  var query = "Javascript"
   var pageRepo = 1;
   var per_page = 12;
   var actualUrlSubscriber = '';
@@ -20,28 +20,28 @@
   //----OBJECTS
 
   var itemList = {
-    'repository' :{
-      'class' : 'item-repo',
-      'messages' : {
-        'nodata' : function(query){
+    'repository': {
+      'class': 'item-repo',
+      'messages': {
+        'nodata': (function(query) {
           return 'We couldn’t find any repositories matching <span>' + query + '</span>';
-        }
+        })()
       },
-      'callback': function(par1, par2){
+      'callback': function(par1, par2) {
         printRepositories(par1, par2);
-      }  
+      }
     },
-    'subscriber' :{
-      'class' : 'item-subscriber',
-      'messages' : {
-        'nodata' : function(query){
+    'subscriber': {
+      'class': 'item-subscriber',
+      'messages': {
+        'nodata': (function(query) {
           return 'No subscribers';
-        }
+        })()
       },
-      'callback': function(par1, par2){
+      'callback': function(par1, par2) {
         printSubscribers(par1, par2);
-      }  
-    }    
+      }
+    }
   };
 
   //-- ON DOCUMENT READY
@@ -133,7 +133,7 @@
     });
     /* ----------------------- 
         BACK TO REPOS BUTTON
-     -------------------------- */    
+     -------------------------- */
 
     $backReposBtn.on('click', function() {
 
@@ -146,12 +146,12 @@
       $paginationRepos.show();
       $reposContainer.show();
       //-- UPDATE TITLE
-      $title.html(actualNumRepos + ' <span>' + query + '</span> repositories');
+      $title.html('<span>' + query + '</span>'+ actualNumRepos +' repositories');
     });
 
     /* ----------------------- 
         PAGINATION INTERACTION
-     -------------------------- */   
+     -------------------------- */
     $paginationRepos.on('click', '.link-pag', function() {
 
       var $this = $(this);
@@ -233,8 +233,8 @@
 
 
   function printSubscribers(data, typeItem) {
-    
-    $title.html('<span>' + actualRepoName + '</span> Repository subscribers');    
+
+    $title.html('<span>' + actualRepoName + '</span> Repository subscribers');
 
     var container = d3.select('#subscribers-list')
 
@@ -296,6 +296,8 @@
       .attr('class', 'links');
 
     links
+      .append('div')
+      .attr('class', 'item-footer')    
       .append('a')
       .attr('class', 'repositories-link')
       .attr('href', function(d) {
@@ -311,7 +313,7 @@
   function printRepositories(data, itemName) {
 
     actualNumRepos = data.total_count;
-    $title.html(data.total_count + ' <span>' + query + '</span> repositories');
+    $title.html('<span>' + query + '</span>'+ data.total_count +' repositories');
 
     var data = data.items;
     var container = d3.select('#repositories-list')
@@ -334,6 +336,12 @@
         return d.owner.avatar_url;
       });
 
+    item
+      .select('name-login')
+      .text(function(d) {
+        return d.owner.login;
+      });
+
     //--- FORKS
     item
       .select('.forks-data')
@@ -347,7 +355,6 @@
       .text(function(d) {
         return d.watchers_count;
       });
-
     //--- REPO INFO
     item
       .select('.repo-title')
@@ -382,27 +389,40 @@
       .append('div')
       .attr('class', itemName)
 
+
+    //--- INNER PADDINDG
+    var inner = updatedItem
+      .append('div')
+      .attr('class', 'inner-padding');
+
     //--- LANGUAGE
-    updatedItem
+    inner
       .append('div')
       .attr('class', 'language')
       .text(function(d) {
         return d.language;
       });
 
-    //--- INNER PADDINDG
-    var inner = updatedItem
-      .append('div')
-      .attr('class', 'inner-padding')
-
     //--- AVATAR
-    inner
+    var user = inner
+      .append('div')
+      .attr('class', 'user');
+
+
+    user
       .append('div')
       .attr('class', 'avatar')
       .append('img')
       .attr('class', 'img-avatar')
       .attr('src', function(d) {
         return d.owner.avatar_url;
+      });
+
+    user
+      .append('div')
+      .attr('class', 'name-login')
+      .text(function(d) {
+        return d.owner.login;
       });
 
     //--- STATS
@@ -413,7 +433,9 @@
     //--- FORKS
     var forks = stats
       .append('div')
-      .attr('class', 'block')
+      .attr('class', 'block');
+
+    forks
       .append('span')
       .attr('class', 'forks-data')
       .text(function(d) {
@@ -421,13 +443,15 @@
       });
 
     forks.append('div')
-      .attr('class', 'label')
+      .attr('class', 'label-data')
       .text('Forks');
 
     //--- WATCHERS
     var watchers = stats
       .append('div')
-      .attr('class', 'block')
+      .attr('class', 'block');
+
+    watchers
       .append('span')
       .attr('class', 'watchers-data')
       .text(function(d) {
@@ -435,7 +459,7 @@
       });
 
     watchers.append('div')
-      .attr('class', 'label')
+      .attr('class', 'label-data')
       .text('Watchers');
 
     //--- REPO INFO
