@@ -46,11 +46,21 @@ button {
   .inner-margin>* {
     display: block;
     float: left;
+    &:nth-child(1) {
+      @include mediaquery('max', $small) {
+        float: none;
+        margin: 0 auto 20px auto;
+      }
+    }
     &:nth-child(2) {
       width: calc(100% - 110px);
       box-sizing: border-box;
       padding: 0 0 0 30px;
       margin-top: 7px;
+      @include mediaquery('max', $small) {
+        width: calc(100% - 60px);
+        padding: 0;
+      }
     }
     &:nth-child(3) {
       margin-top: 7px;
@@ -59,12 +69,19 @@ button {
   img {
     width: 50px;
     height: auto;
+    @include mediaquery('max', $small) {
+      width: 80px;
+    }
   }
   .inner-margin {
     max-width: 600px;
     width: 90%;
     margin: 0 auto;
   }
+}
+
+.inner-margin {
+  @include clearfix;
 }
 
 .input-search {
@@ -221,6 +238,9 @@ button {
   background: white;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
   @include clearfix;
+  @include mediaquery('max', $small) {
+    padding-bottom: 80px;
+  }
 }
 
 .language {
@@ -229,7 +249,7 @@ button {
   right: 0;
   width: 50%;
   min-height: 28px;
-  padding: 5px;
+  padding: 6px 5px 4px 5px;
   box-sizing: border-box;
   background: rgba($black, 0.6);
   text-align: center;
@@ -363,6 +383,9 @@ button {
   padding: 10px 20px;
   box-sizing: border-box;
   transition: background 200ms ease-in-out;
+  @include mediaquery('max', $small) {
+    padding: 20px;
+  }
   &:hover {
     background: rgba($black, 0.2);
   }
@@ -382,9 +405,9 @@ button {
 .item-subscriber {
   .avatar {
     float: left;
-    img{
-          -webkit-filter: grayscale(0);
-    filter: grayscale(0);
+    img {
+      -webkit-filter: grayscale(0);
+      filter: grayscale(0);
     }
   }
   .subscriber-name {
@@ -412,4 +435,5 @@ button {
   background: rgba($black, 0.09);
   text-align: center;
   color: rgba($black, 0.5);
+  box-sizing: border-box;
 }
