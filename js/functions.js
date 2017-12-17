@@ -23,9 +23,9 @@
     'repository': {
       'class': 'item-repo',
       'messages': {
-        'nodata': (function(query) {
+        'nodata': function(query) {
           return 'We couldn’t find any repositories matching <span>' + query + '</span>';
-        })()
+        }
       },
       'callback': function(par1, par2) {
         printRepositories(par1, par2);
@@ -34,9 +34,9 @@
     'subscriber': {
       'class': 'item-subscriber',
       'messages': {
-        'nodata': (function(query) {
+        'nodata': function(query) {
           return 'No subscribers';
-        })()
+        }
       },
       'callback': function(par1, par2) {
         printSubscribers(par1, par2);
@@ -63,7 +63,7 @@
 
     /* ----------------------- 
         ON LOAD SHOW LIST OF 
-        "AMAZING" REPOSITORIES
+        "Javascript" REPOSITORIES
      -------------------------- */
 
     $loader.addClass('animate');
@@ -146,7 +146,7 @@
       $paginationRepos.show();
       $reposContainer.show();
       //-- UPDATE TITLE
-      $title.html('<span>' + query + '</span>'+ actualNumRepos +' repositories');
+      $title.html('<span>' + query + '</span>' + actualNumRepos + ' repositories');
     });
 
     /* ----------------------- 
@@ -199,12 +199,14 @@
 
   /*============ FUNCTIONS ===============*/
 
-  function getData(url, item) {
+  function getData(url, itemType) {
 
-    var typeItem = itemList[item].class;
+    var typeItem = itemList[itemType].class;
 
     //---LOAD DATA
     d3.json(url, function(error, data) {
+
+      var dataLength = (itemType === 'repository' ? data.items.length : data.length);
 
       if (error) {
 
@@ -212,16 +214,18 @@
 
         throw error
 
-      } else if (data.length === 0) {
+      } else if (dataLength === 0) {
+
 
         $('.' + typeItem).remove();
         $title.empty();
+        $paginationRepos.empty();
 
-        $messages.html(itemList[item].nodata());
+        $messages.html(itemList[itemType].messages.nodata(query));
 
       } else {
 
-        itemList[item].callback(data, typeItem);
+        itemList[itemType].callback(data, typeItem);
       }
 
       $loader.removeClass('animate');
@@ -297,7 +301,7 @@
 
     links
       .append('div')
-      .attr('class', 'item-footer')    
+      .attr('class', 'item-footer')
       .append('a')
       .attr('class', 'repositories-link')
       .attr('href', function(d) {
@@ -313,7 +317,7 @@
   function printRepositories(data, itemName) {
 
     actualNumRepos = data.total_count;
-    $title.html('<span>' + query + '</span>'+ data.total_count +' repositories');
+    $title.html('<span>' + query + '</span>' + data.total_count + ' repositories');
 
     var data = data.items;
     var container = d3.select('#repositories-list')
