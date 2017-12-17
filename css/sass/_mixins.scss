@@ -120,3 +120,14 @@
   -webkit-flex-direction: row;
   flex-direction: row;
 }
+
+@mixin userselectnone {
+  -webkit-user-select: none;
+  /* Chrome, Opera, Safari */
+  -moz-user-select: none;
+  /* Firefox 2+ */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Standard syntax */
+}

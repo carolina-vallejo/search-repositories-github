@@ -56,6 +56,12 @@
     width: 33.3333333333%;
     padding: 20px;
     float: left; }
+    @media only screen and (max-width: 768px) {
+      [class*="-list"] > * {
+        width: 50%; } }
+    @media only screen and (max-width: 600px) {
+      [class*="-list"] > * {
+        width: 100%; } }
 
 /*--- GENERALS ---*/
 body {
@@ -176,30 +182,12 @@ input[type=text] {
   letter-spacing: 0px;
   font-weight: normal;
   margin-bottom: 0;
-  width: 50%;
-  float: left; }
-
-.back-buttons {
-  width: 50%;
-  float: right;
-  margin-top: 20px; }
-  .back-buttons::after, .back-buttons::before {
-    content: "";
-    display: table; }
-  .back-buttons::after {
-    clear: both; }
-
-.prev-btn {
-  height: 40px;
-  float: right;
-  box-sizing: border-box;
-  border: 0;
-  background: url(../assets/ico-back.svg) no-repeat;
-  background-size: 23px;
-  padding-left: 30px;
-  background-position: left center;
-  margin-right: 20px;
-  color: rgba(55, 63, 76, 0.3); }
+  text-transform: capitalize;
+  font-weight: 300;
+  color: rgba(55, 63, 76, 0.7); }
+  .title span {
+    color: #373f4c;
+    font-weight: 400; }
 
 .back-btn {
   padding: 0;
@@ -215,10 +203,9 @@ input[type=text] {
   background-position: center;
   margin-right: 20px;
   color: rgba(55, 63, 76, 0.3);
-  margin-top: 43px;
+  margin-top: 20px;
   border-radius: 100%; }
 
-.prev-btn,
 .back-btn,
 .more-btn {
   display: none; }
@@ -257,8 +244,33 @@ input[type=text] {
   cursor: pointer;
   color: red; }
 
+/*-- PAGINATION --*/
+.pagination-repos {
+  text-align: center; }
+  .pagination-repos span {
+    display: inline-block;
+    padding-left: 20px;
+    background: red;
+    margin: 5px;
+    -webkit-user-select: none;
+    /* Chrome, Opera, Safari */
+    -moz-user-select: none;
+    /* Firefox 2+ */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+    /* Standard syntax */ }
+
+.active-pag {
+  opacity: 0.5;
+  pointer-events: none; }
+
+.link-pag {
+  cursor: pointer; }
+
 /*-- FOOTER --*/
 .footer {
+  float: left;
   margin-top: 100px;
   height: 100px;
   width: 100%;

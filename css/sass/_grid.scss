@@ -14,5 +14,11 @@
     width: (100% / 3);
     padding: 20px;
     float: left;
+    @include mediaquery('max', $medium){
+			width: (100% / 2);
+    }
+    @include mediaquery('max', $small){
+			width: (100% / 1);
+    }    
   }
 }

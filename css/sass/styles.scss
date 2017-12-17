@@ -46,6 +46,7 @@ body {
   }
 }
 
+
 /*-- BUTTONS --*/
 
 button,
@@ -67,7 +68,6 @@ button {
   cursor: pointer;
   &:focus {
     outline: 0;
-   
   }
 }
 
@@ -120,7 +120,8 @@ input[type=text] {
 
 
 /*-- TOP CONTAINERS --*/
-.wrap-top-containers{
+
+.wrap-top-containers {
   @include clearfix;
 }
 
@@ -128,32 +129,17 @@ input[type=text] {
   letter-spacing: 0px;
   font-weight: normal;
   margin-bottom: 0;
-  width: 50%;
-  float: left;
-}
-.back-buttons{
-  @include clearfix;
-  width: 50%;
-  float: right;
-  margin-top: 20px;
-}
-.prev-btn {
-  height: 40px;
-  float: right;
-  box-sizing: border-box;
-  border: 0;
-  background: url(../assets/ico-back.svg) no-repeat;
-  background-size: 23px;
-  padding-left: 30px;
-  background-position: left center;
-  margin-right: 20px;
-  color: rgba($black, 0.3);
-
-
+  text-transform: capitalize;
+  font-weight: 300;
+  color: rgba($black,0.7);
+  span {
+    color: rgba($black,1);
+    font-weight: 400;  
+  }
 }
 
 .back-btn {
-  padding:0;
+  padding: 0;
   height: 30px;
   width: 30px;
   float: left;
@@ -166,13 +152,10 @@ input[type=text] {
   background-position: center;
   margin-right: 20px;
   color: rgba($black, 0.3);
-  margin-top: 43px;
+  margin-top: 20px;
   border-radius: 100%;
-
-
 }
 
-.prev-btn,
 .back-btn,
 .more-btn {
   display: none;
@@ -192,43 +175,68 @@ input[type=text] {
 }
 
 
-
-
 /*--- CONTAINERS ---*/
 
 .repositories-list,
 .subscribers-list {
   padding: 30px 0;
 }
-.subscribers-list{
+
+.subscribers-list {
   display: none;
 }
 
+
 /*--- REPOSITORY ITEM ---*/
-.avatar{
+
+.avatar {
   width: 70px;
   height: 70px;
   overflow: hidden;
   border-radius: 100%;
   border: 1px solid #f1f1f1;
-
-  img{
-      -webkit-filter: grayscale(100%);
-  filter: grayscale(100%);
+  img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
     width: 100%;
   }
 }
-.subscribers-link{
+
+.subscribers-link {
   cursor: pointer;
   color: red;
 }
 
+
+/*-- PAGINATION --*/
+
+.pagination-repos {
+  text-align: center;
+  span {
+    display: inline-block;
+    padding-left: 20px;
+    background: red;
+    margin: 5px;
+    @include userselectnone;
+  }
+}
+
+.active-pag {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.link-pag {
+  cursor: pointer;
+}
+
+
 /*-- FOOTER --*/
-.footer{
+
+.footer {
+  float: left;
   margin-top: 100px;
   height: 100px;
   width: 100%;
   background: rgba($black, 0.09);
 }
-
-
