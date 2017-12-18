@@ -229,7 +229,8 @@
       }
 
       $loader.removeClass('animate');
-      $htmlBody.animate({ scrollTop: 0 }, 600);
+      $htmlBody.animate({ scrollTop: 0 }, 500);
+
 
     });
 
@@ -263,6 +264,13 @@
       .text(function(d) {
         return d.login;
       });
+
+    //--- TRANSITION
+    item.style('opacity', 0)
+      .transition()
+      .delay(500)
+      .duration(500)
+      .style('opacity', 1);
 
 
     /* ----------------------- 
@@ -309,6 +317,13 @@
       })
       .text('Repositories');
 
+    //--- TRANSITION
+    updatedItem.style('opacity', 0)
+      .transition()
+      .delay(500)
+      .duration(500)
+      .style('opacity', 1);
+
     //--- EXIT & REMOVE
     item.exit().remove();
 
@@ -329,10 +344,13 @@
     /* ----------------------- 
          UPDATE OLD ELEMENTS
     -------------------------- */
+
+    //--- LANGUAGE     
     item.select('.language')
       .text(function(d) {
         return d.language;
       });
+
     //--- AVATAR
     item
       .select('.img-avatar')
@@ -375,6 +393,7 @@
         return d.description;
       });
 
+
     //--- SUBSCRIBERS LIST
     item
       .select('.subscribers-link')
@@ -385,14 +404,20 @@
         return d.name;
       });
 
+    //--- TRANSITION 
+    item.style('opacity', 0)
+      .transition()
+      .delay(500)
+      .duration(500)
+      .style('opacity', 1);
+
     /* ----------------------- 
          ENTER NEW ELEMENTS
     -------------------------- */
 
     var updatedItem = item.enter()
       .append('div')
-      .attr('class', itemName)
-
+      .attr('class', itemName);
 
     //--- INNER PADDINDG
     var inner = updatedItem
@@ -500,6 +525,13 @@
         return d.name;
       })
       .text('Subscribers list');
+
+    //--- TRANSITION
+    updatedItem.style('opacity', 0)
+      .transition()
+      .delay(500)
+      .duration(500)
+      .style('opacity', 1);
 
     //--- EXIT & REMOVE
     item.exit().remove();
