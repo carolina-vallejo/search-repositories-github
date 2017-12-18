@@ -295,7 +295,9 @@ button {
   top: 0;
   right: 0;
   width: 50%;
+  height: 28px;
   min-height: 28px;
+  overflow: hidden;
   padding: 6px 5px 4px 5px;
   box-sizing: border-box;
   background: rgba(55, 63, 76, 0.6);
