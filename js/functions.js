@@ -359,7 +359,7 @@
       });
 
     item
-      .select('name-login')
+      .select('.name-login')
       .text(function(d) {
         return d.owner.login;
       });
