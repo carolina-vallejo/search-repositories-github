@@ -1,6 +1,6 @@
-# test-asana-frontend
+## Description
 
-A Web App for Asana Rebel Frontend Test
+A Web App in D3.js to search github repositories
 
-You can see the app running here: [http://carolinavallejo.x10.mx/test/asana-task/](http://carolinavallejo.x10.mx/test/asana-task/)
+You can see the app running here: [http://carolinavallejo.x10.mx/test/search-github/](http://carolinavallejo.x10.mx/test/search-github/)
 
